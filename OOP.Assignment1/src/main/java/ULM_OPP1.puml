@@ -1,0 +1,60 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface Sender{
+|     void register(Member obj)          |
+|   void unregister(Member obj)          |
+|  void insert(int offset, String obj)   |
+|   void append(String obj)   |
+|   void delete(int start, int end)      |
+|                 void undo()       |
+}
+interface Member{
+|  void update(UndoableStringBuilder usb)   |
+}
+
+class GroupAdmin{
+HashMap<Member, String> registers
+UndoableStringBuilder usb
+|           void notifyRegisters()          |
+|    UndoableStringBuilder getUsb()          |
+|     void register(Member obj)          |
+|   void unregister(Member obj)          |
+|             String toString()          |
+|  void insert(int offset, String obj)   |
+|   void append(String obj)   |
+|   void delete(int start, int end)      |
+|                 void undo()          |
+}
+
+class ConcreteMember{
+String name
+UndoableStringBuilder usb
+|  UndoableStringBuilder getUsb()    |
+|               String getName()     |
+|               String toString()    |
+|  update(UndoableStringBuilder usb)  |
+}
+
+class Tests{
+class ConcreteMemberTest
+class GroupAdminTest
+class Tests
+}
+
+class UndoableStringBuilder{
+StringBuilder st
+Stack <StringBuilder> sb = new Stack<>()
+|                UndoableStringBuilder append(String str)   |
+|      UndoableStringBuilder delete(int start, int end)     |
+|       UndoableStringBuilder insert(int offset, String str)     |
+|       UndoableStringBuilder replace(int start, int end, String str)    |
+|             UndoableStringBuilder reverse()  |
+|                                       void undo()  |
+|                                  String toString()  |
+}
+
+Sender <|-- GroupAdmin
+Member <|-- ConcreteMember
+
+@enduml
